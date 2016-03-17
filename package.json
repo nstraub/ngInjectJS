@@ -1,0 +1,22 @@
+{
+  "name": "ng-inject-js",
+  "version": "0.1.0",
+  "description": "Integrates InjectJS into Angular to allow service registration with different lifetimes",
+  "main": "ng.inject.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "angular",
+    "injectjs",
+    "lifetime",
+    "management",
+    "dependency",
+    "injection"
+  ],
+  "dependencies": {
+    "inject-js": "~0.3.1"
+  },
+  "author": "Nicolas Straub",
+  "license": "ISC"
+}
