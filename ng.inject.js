@@ -1,12 +1,11 @@
 /* global angular*/
-angular.module('ngInjectJS', ['injectJS'], ['$provide', '$injectorProvider', '$injectJSProvider', function ($provide, $injectorProvider, $injectJSProvider) {
+angular.module('ngInjectJS', ['injectJS'], ['$provide', '$injectorProvider', '$injectJSProvider', function ($provide, $injectorProvider) {
 
     var originalServiceProvider = $provide.service,
-        $injectJS = $injectJSProvider.$get();
+        $injectJS;
 
-    $injectJSProvider.$get = function () {
-        return $injectJS;
-    };
+    var $injector = $injectorProvider.$get();
+    $injectJS = $injector.get('$injectJS');
 
     $provide.service = function (name, fn, lifetime) {
         if (lifetime) {
@@ -45,8 +44,6 @@ angular.module('ngInjectJS', ['injectJS'], ['$provide', '$injectorProvider', '$i
         }
         return originalServiceProvider.apply(this, arguments);
     };
-
-    var $injector = $injectorProvider.$get();
 
     var originalInvoke = $injector.invoke;
     $injectJS.get = function(name, serviceName) {
