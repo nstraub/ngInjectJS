@@ -1,6 +1,5 @@
 /* global angular*/
 angular.module('ngInjectJS', ['injectJS'], ['$provide', '$injectorProvider', '$injectJSProvider', function ($provide, $injectorProvider) {
-
     var originalServiceProvider = $provide.service,
         $injectJS;
 
@@ -8,7 +7,7 @@ angular.module('ngInjectJS', ['injectJS'], ['$provide', '$injectorProvider', '$i
     $injectJS = $injector.get('$injectJS');
 
     $provide.service = function (name, fn, lifetime) {
-        if (lifetime) {
+        if (lifetime && lifetime !== 'singleton') {
             if (lifetime === 'state') {
                 originalServiceProvider.apply(this, arguments);
                 $provide.decorator(name, [
@@ -52,8 +51,10 @@ angular.module('ngInjectJS', ['injectJS'], ['$provide', '$injectorProvider', '$i
             throw 'There is no dependency named "' + name + '" registered.';
         }
         var adhoc = {};
-        for (var i = 0; i < descriptor.dependencies.length; i++) {
-            var current = descriptor.dependencies[i];
+        var dependencies = descriptor.dependencies || [];
+        var length = dependencies.length;
+        for (var i = 0; i < length; i++) {
+            var current = dependencies[i];
             if ($injector.has(current)) {
                 adhoc[current] = $injector.get(current);
             }
@@ -87,5 +88,13 @@ angular.module('ngInjectJS', ['injectJS'], ['$provide', '$injectorProvider', '$i
             }
         }
         return args;
+    }
+
+    var originalGet = $injector.get;
+    $injector.get = function (name, caller) {
+        if (!this.has(name)) {
+            return $injectJS.get(name, caller)
+        }
+        return originalGet.apply(this, arguments)
     }
 }]);

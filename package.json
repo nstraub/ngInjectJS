@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": "https://github.com/nstraub/ngInjectJS.git",
   "keywords": [
     "angular",
     "injectjs",
@@ -18,5 +19,15 @@
     "inject-js": "~0.3.1"
   },
   "author": "Nicolas Straub",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "inject-js": "~0.3.1",
+    "angular": "^1.5.2",
+    "angular-mocks": "^1.5.2",
+    "jasmine-core": "^2.4.1",
+    "karma": "^0.13.22",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-coffee-preprocessor": "^0.3.0",
+    "karma-jasmine": "^0.3.8"
+  }
 }
